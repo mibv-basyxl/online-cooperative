@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CoopSaaS — Online Cooperative Society Database & Tax Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   CSS — applied after the HTML structure below
+   ============================================================ */
+:root{
+  --brand-50:#eef2ff;--brand-100:#e0e7ff;--brand-200:#c7d2fe;--brand-300:#a5b4fc;
+  --brand-500:#6366f1;--brand-600:#4f46e5;--brand-700:#4338ca;--brand-800:#3730a3;--brand-900:#312e81;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;
+  --gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Poppins',system-ui,sans-serif;color:var(--gray-800);background:#fff;line-height:1.55;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Poppins','Inter',sans-serif;line-height:1.25}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+.logo{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.25rem;color:var(--brand-700)}
+.logo span{color:var(--gray-900)}
+.container{max-width:1140px;margin:0 auto;padding:0 22px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:.9rem;border-radius:10px;padding:10px 18px;border:none;transition:all .2s}
+.btn-primary{background:var(--brand-600);color:#fff}.btn-primary:hover{background:var(--brand-700)}
+.btn-outline{background:#fff;color:var(--gray-700);border:1px solid var(--gray-300)}.btn-outline:hover{border-color:var(--brand-500);color:var(--brand-600)}
+.btn-tiny{padding:4px 9px;font-size:12px;border-radius:8px;border:1px solid var(--gray-200);background:var(--gray-50);color:var(--gray-600)}
+.btn-tiny.danger{color:#dc2626}.btn-tiny:hover{background:var(--gray-100)}
+.btn.small{padding:7px 12px;font-size:13px}
+.btn.w-full{width:100%}
+.btn-link{background:none;border:none;color:var(--brand-600);font-weight:600;font-size:.9rem}
+.btn-link.danger{color:#fca5a5}
+.w-full{width:100%}
+
+/* ---------- landing ---------- */
+.l-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-200)}
+.l-nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.l-links{display:flex;align-items:center;gap:22px}
+.l-links a{font-size:.9rem;font-weight:500;color:var(--gray-600)}.l-links a:hover{color:var(--brand-600)}
+.hero{background:linear-gradient(135deg,var(--brand-50),#fff 55%,var(--brand-50));padding:74px 0;text-align:center}
+.hero-badge{display:inline-block;background:#fff;border:1px solid var(--brand-200);color:var(--brand-700);font-size:.78rem;font-weight:600;border-radius:999px;padding:6px 14px;margin-bottom:16px}
+.hero h1{font-size:2.5rem;font-weight:800;letter-spacing:-.02em;color:var(--gray-900)}
+.hero h1 .accent{color:var(--brand-600)}
+.hero .lead{margin:16px auto 0;max-width:560px;font-size:1.05rem;color:var(--gray-500)}
+.hero-ctas{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+section{padding:64px 0}
+.sec-title{text-align:center;font-size:1.9rem;font-weight:700;margin-bottom:36px}
+.f-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.f-card{background:#fff;border:1px solid var(--gray-200);border-radius:14px;padding:22px;transition:.25s}
+.f-card:hover{transform:translateY(-3px);border-color:var(--brand-200);box-shadow:0 14px 30px -14px rgba(49,46,129,.18)}
+.f-icon{font-size:1.6rem;margin-bottom:10px}
+.f-card h3{font-size:1.02rem;margin-bottom:6px}
+.f-card p{font-size:.88rem;color:var(--gray-500)}
+.p-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.p-card{position:relative;background:#fff;border:1px solid var(--gray-200);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:8px}
+.p-card.featured{border:2px solid var(--brand-600);box-shadow:0 18px 40px -16px rgba(79,70,229,.3)}
+.p-card .tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--brand-600);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 13px;border-radius:999px}
+.p-card .price{font-size:1.9rem;font-weight:800}
+.p-card .price small{font-size:.85rem;font-weight:500;color:var(--gray-400)}
+.p-card .sub{font-size:.85rem;color:var(--gray-500)}
+.p-card .btn{margin-top:14px}
+.p-card.current{border-color:var(--brand-500);background:var(--brand-50)}
+.fine{font-size:.78rem;color:var(--gray-400);margin-top:10px}
+.l-footer{background:var(--gray-900);color:var(--gray-400);padding:30px 0;font-size:.82rem;margin-top:30px}
+
+/* ---------- auth ---------- */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--brand-50),#fff 60%,var(--brand-50));padding:18px}
+.auth-card{background:#fff;border:1px solid var(--gray-200);border-radius:18px;box-shadow:0 24px 60px -20px rgba(49,46,129,.25);padding:30px;width:100%;max-width:430px}
+.auth-card h1{font-size:1.5rem;margin-top:14px}
+.auth-card .form{margin-top:18px}
+.demo-box{margin-top:18px;background:var(--gray-50);border:1px dashed var(--gray-300);border-radius:12px;padding:14px}
+.demo-box .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.muted{color:var(--gray-500)}.small{font-size:.82rem}.center{text-align:center;margin-top:14px}
+.muted a{color:var(--brand-600);font-weight:600}
+
+/* ---------- app shell ---------- */
+.shell{display:flex;min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:236px;background:var(--brand-900);color:#fff;display:flex;flex-direction:column;z-index:40;transition:transform .25s}
+.sidebar .brand{padding:20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar .brand .logo{color:#fff;font-size:1.1rem}
+.sidebar .brand .logo span{color:var(--brand-300)}
+.sidebar nav{flex:1;padding:12px;display:flex;flex-direction:column;gap:3px;overflow-y:auto}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:.88rem;font-weight:500;color:var(--brand-100);transition:.2s}
+.nav-link:hover{background:var(--brand-800);color:#fff}
+.nav-link.active{background:var(--brand-600);color:#fff}
+.side-foot{padding:14px;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:8px}
+.side-foot .who{font-size:.8rem;color:var(--brand-200);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.main{margin-left:236px;flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-200);padding:14px 22px;display:flex;align-items:center;gap:14px}
+.topbar h2{font-size:1.15rem}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.bell{position:relative;font-size:1.1rem}
+.bell .count{position:absolute;top:-7px;right:-9px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 5px}
+.who{font-size:.85rem;font-weight:600;color:var(--gray-600)}
+.burger{display:none;background:none;border:none;font-size:20px;color:var(--gray-700);padding:2px 6px}
+.content{padding:22px;flex:1}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  .main{margin-left:0}
+  .burger{display:inline-flex}
+  .f-grid,.p-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .f-grid,.p-grid{grid-template-columns:1fr}
+  .hero h1{font-size:1.8rem}
+  .l-links .btn-outline{display:none}
+  .content{padding:14px}
+  .topbar{padding:12px 14px}
+}
+
+/* ---------- cards / stats ---------- */
+.cards{display:grid;gap:14px;margin-bottom:18px}
+.grid2{grid-template-columns:repeat(2,1fr)}
+.grid3{grid-template-columns:repeat(3,1fr)}
+.grid4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+.stat-card{background:#fff;border:1px solid var(--gray-200);border-radius:14px;padding:16px 18px}
+.stat-label{display:block;font-size:12px;font-weight:600;color:var(--gray-500)}
+.stat-value{display:block;font-size:21px;font-weight:800;color:var(--gray-900);margin-top:4px;word-break:break-word}
+.stat-sub{display:block;font-size:11px;color:var(--gray-400);margin-top:2px}
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:14px;padding:20px;margin-bottom:16px}
+.card h3{font-size:1rem;margin-bottom:12px}
+.mini-stat{background:var(--gray-50);border:1px solid var(--gray-100);border-radius:10px;padding:10px;text-align:center}
+.mini-stat b{display:block;font-size:15px}
+.mini-stat span{font-size:11px;color:var(--gray-500)}
+
+/* ---------- tables ---------- */
+.table-wrap{overflow-x:auto;border:1px solid var(--gray-200);border-radius:12px;background:#fff}
+.table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:600px}
+.table th{text-align:left;padding:10px 13px;background:var(--gray-50);color:var(--gray-500);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.table td{padding:10px 13px;border-top:1px solid var(--gray-100);vertical-align:top}
+.table tbody tr:hover td{background:#fafaff}
+.row-actions{display:flex;gap:5px;flex-wrap:wrap}
+.empty{color:var(--gray-400);text-align:center;padding:30px;font-size:.9rem}
+
+/* ---------- badges ---------- */
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
+.badge.green{background:#ecfdf5;color:#047857}
+.badge.amber{background:#fffbeb;color:#b45309}
+.badge.red{background:#fef2f2;color:#b91c1c}
+.badge.blue{background:#eff6ff;color:#1d4ed8}
+.badge.gray{background:var(--gray-100);color:var(--gray-600)}
+
+/* ---------- forms ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.input{width:100%;padding:9px 12px;border:1px solid var(--gray-300);border-radius:10px;font-size:14px;font-family:inherit;background:#fff;color:var(--gray-800)}
+.input:focus{outline:none;border-color:var(--brand-500);box-shadow:0 0 0 3px var(--brand-100)}
+.toolbar .input{width:auto;min-width:150px}
+.form label{display:block;font-size:13px;font-weight:600;color:var(--gray-700);margin:0 0 4px}
+.form .input{margin-bottom:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+.form.inline{display:flex;gap:10px;flex-wrap:wrap}
+.form.inline .input{width:auto}
+
+/* ---------- modal ---------- */
+.modal-backdrop{position:fixed;inset:0;background:rgba(17,24,39,.55);z-index:60;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;padding:22px;box-shadow:0 30px 70px -20px rgba(0,0,0,.35)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.modal-head h3{font-size:1.1rem}
+.modal-x{background:none;border:none;font-size:24px;color:var(--gray-400);line-height:1}
+.modal h4{margin:14px 0 8px;font-size:.95rem}
+
+/* ---------- toast ---------- */
+#toast-root{position:fixed;right:16px;bottom:16px;z-index:80;display:flex;flex-direction:column;gap:8px}
+.toast{padding:12px 18px;border-radius:12px;color:#fff;font-size:14px;font-weight:600;box-shadow:0 10px 24px rgba(0,0,0,.2);animation:slideIn .25s ease;max-width:340px}
+.toast.success{background:#059669}.toast.error{background:#dc2626}.toast.info{background:var(--brand-600)}
+@keyframes slideIn{from{transform:translateY(12px);opacity:0}}
+
+/* ---------- notifications ---------- */
+.notif{border:1px solid var(--gray-200);border-radius:12px;padding:11px 14px;margin-bottom:8px;background:#fff;cursor:pointer}
+.notif.read{opacity:.62}
+.notif p{font-size:.85rem;color:var(--gray-600);margin-top:2px}
+
+/* ---------- charts ---------- */
+.chart{display:flex;gap:8px;height:210px;align-items:flex-end}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;min-width:0}
+.chart-single,.chart-bars2{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:4px}
+.chart-bar{width:20px;border-radius:6px 6px 0 0;min-height:2px}
+.chart-col>span{font-size:11px;color:var(--gray-400)}
+.legend{display:flex;gap:16px;justify-content:center;font-size:12px;color:var(--gray-500);margin-top:8px}
+.legend .lg{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ---------- print ---------- */
+@media print{
+  .no-print,.sidebar,.topbar,.toolbar{display:none!important}
+  .main{margin:0!important}
+  body{background:#fff}
+  .card{border:none;padding:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HTML STRUCTURE (rendered by JS into #app) ============ -->
+<main id="app"></main>
+
+<div id="modal-root"></div>
+<div id="toast-root"></div>
+
+<script>
+'use strict';
+/* ============================================================
+   JAVASCRIPT — the logic layer, added after the HTML structure
+   ============================================================ */
+const DB_KEY='coop_mvp_v1';
+const SESSION_KEY='coop_mvp_sess_v1';
+const DAY=86400000;
+const dSince=(n)=>new Date(Date.now-n*DAY).toISOString;
+const dPlus=(n)=>new Date(Date.now+n*DAY).toISOString;
+const uid==>'id'+Math.random.toString(36).slice(2,9)+Date.now.toString(36);
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmt(n){return '₦'+Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtDate(iso){if(!iso)return '—';return new Date(iso).toLocaleDateString;}
+function memberName(id){const m=db.members.find(x=>x.id===id);return m?m.fullName:'—';}
+function currentUser{const id=localStorage.getItem(SESSION_KEY);return db.users.find(u=>u.id===id)||null;}
+function currentCoop{const u=currentUser;return u&&u.coopId?db.coops.find(c=>c.id===u.coopId):null;}
+function render(html){document.getElementById('app').innerHTML=html;document.getElementById('modal-root').innerHTML='';window.scrollTo(0,0);}
+function toast(msg,type){type=type||'success';const r=document.getElementById('toast-root');const el=document.createElement('div');el.className='toast '+type;el.textContent=msg;r.appendChild(el);setTimeout(=>el.remove,3800);}
+function openModal(html){document.getElementById('modal-root').innerHTML='<div class="modal-backdrop"><div class="modal">'+html+'</div></div>';}
+function closeModal{document.getElementById('modal-root').innerHTML='';}
+function notif(coopId,userId,type,title,msg){db.notifications.push({id:uid,coopId:coopId,userId:userId||null,type:type,title:title,msg:msg,read:false,at:new Date.toISOString});}
+function notifCount(coopId){const u=currentUser;return db.notifications.filter(n=>n.coopId===coopId&&(!n.userId||n.userId===u.id)&&!n.read).length;}
+function badge(s,color){const map={ACTIVE:'green',INACTIVE:'gray',PENDING:'amber',APPROVED:'blue',REJECTED:'red',PAID:'green',OVERDUE:'red',FULLY_PAID:'green'};const c=color||map[s]||'gray';return '<span class="badge '+c+'">'+esc(String(s||'').replace(/_/g,' '))+'</span>';}
+function statCard(label,value,sub){return '<div class="stat-card"><span class="stat-label">'+esc(label)+'</span><span class="stat-value">'+value+'</span>'+(sub?'<span class="stat-sub">'+esc(sub)+'</span>':'')+'</div>';}
+function csvExport(rows,name){
+  if(!rows.length){toast('Nothing to export','error');return;}
+  const head=Object.keys(rows[0]);
+  const csv=[head.join(','),...rows.map(r=>head.map(k=>'"'+String(r[k]==null?'':r[k]).replace(/"/g,'""')+'"').join(','))].join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=name+'.csv';a.click;
+}
+
+/* ---------- seed data ---------- */
+function seedData{
+  return {
+    plans:[
+      {id:'plan_basic',name:'Basic',memberLimit:100,monthly:5000,yearly:50000},
+      {id:'plan_pro',name:'Professional',memberLimit:500,monthly:15000,yearly:150000},
+      {id:'plan_ent',name:'Enterprise',memberLimit:-1,monthly:50000,yearly:500000}
+    ],
+    users:[
+      {id:'u_sa',name:'Platform Super Admin',email:'superadmin@coop.io',pass:btoa('Password123!'),role:'SUPER_ADMIN',coopId:null,memberId:null,status:'ACTIVE'},
+      {id:'u_admin',name:'Ada Udom',email:'admin@sunrisecoop.ng',pass:btoa('Password123!'),role:'COOP_ADMIN',coopId:'coop1',memberId:null,status:'ACTIVE'},
+      {id:'u_staff',name:'Emeka Bassey',email:'staff@sunrisecoop.ng',pass:btoa('Password123!'),role:'STAFF',coopId:'coop1',memberId:null,status:'ACTIVE'},
+      {id:'u_member',name:'Mary Effiong',email:'mary@example.com',pass:btoa('Password123!'),role:'MEMBER',coopId:'coop1',memberId:'m1',status:'ACTIVE'}
+    ],
+    coops:[
+      {id:'coop1',name:'Sunrise Cooperative Society',regNumber:'RC-12345',email:'admin@sunrisecoop.ng',phone:'08012345678',address:'12 Unity Road, Uyo',state:'Akwa Ibom',planId:'plan_pro',planName:'Professional',memberLimit:500,status:'ACTIVE',trialEnd:dSince(-300),expiry:dPlus(300)}
+    ],
+    members:[
+      {id:'m1',coopId:'coop1',memberNo:'COOP-2026-0001',fullName:'Mary Effiong',email:'mary@example.com',phone:'08022223333',address:'3 Ewet Street',occupation:'Teacher',status:'ACTIVE',joined:dSince(120)},
+      {id:'m2',coopId:'coop1',memberNo:'COOP-2026-0002',fullName:'John Okon',email:'john@example.com',phone:'08044445555',address:'9 Ikot Ekpene Road',occupation:'Trader',status:'ACTIVE',joined:dSince(90)}
+    ],
+    contributions:[
+      {id:'c1',coopId:'coop1',memberId:'m1',type:'MONTHLY_CONTRIBUTION',amount:20000,method:'CASH',ref:'',date:dSince(150),desc:'',by:'u_admin'},
+      {id:'c2',coopId:'coop1',memberId:'m2',type:'MONTHLY_CONTRIBUTION',amount:30000,method:'TRANSFER',ref:'TRF-001',date:dSince(140),desc:'',by:'u_admin'},
+      {id:'c3',coopId:'coop1',memberId:'m1',type:'MONTHLY_CONTRIBUTION',amount:20000,method:'TRANSFER',ref:'TRF-002',date:dSince(120),desc:'',by:'u_staff'},
+      {id:'c4',coopId:'coop1',memberId:'m2',type:'MONTHLY_CONTRIBUTION',amount:30000,method:'CASH',ref:'',date:dSince(110),desc:'',by:'u_staff'},
+      {id:'c5',coopId:'coop1',memberId:'m1',type:'MONTHLY_CONTRIBUTION',amount:20000,method:'CASH',ref:'',date:dSince(90),desc:'',by:'u_admin'},
+      {id:'c6',coopId:'coop1',memberId:'m2',type:'MONTHLY_CONTRIBUTION',amount:30000,method:'TRANSFER',ref:'TRF-003',date:dSince(80),desc:'',by:'u_admin'},
+      {id:'c7',coopId:'coop1',memberId:'m1',type:'SAVINGS',amount:50000,method:'TRANSFER',ref:'SAV-001',date:dSince(75),desc:'Savings deposit',by:'u_admin'},
+      {id:'c8',coopId:'coop1',memberId:'m1',type:'MONTHLY_CONTRIBUTION',amount:20000,method:'CASH',ref:'',date:dSince(60),desc:'',by:'u_staff'},
+      {id:'c9',coopId:'coop1',memberId:'m2',type:'MONTHLY_CONTRIBUTION',amount:30000,method:'CASH',ref:'',date:dSince(50),desc:'',by:'u_staff'},
+      {id:'c10',coopId:'coop1',memberId:'m2',type:'SHARES',amount:100000,method:'TRANSFER',ref:'SHR-001',date:dSince(45),desc:'Share purchase',by:'u_admin'},
+      {id:'c11',coopId:'coop1',memberId:'m1',type:'MONTHLY_CONTRIBUTION',amount:20000,method:'TRANSFER',ref:'TRF-004',date:dSince(30),desc:'',by:'u_admin'},
+      {id:'c12',coopId:'coop1',memberId:'m2',type:'MONTHLY_CONTRIBUTION',amount:30000,method:'TRANSFER',ref:'TRF-005',date:dSince(20),desc:'',by:'u_admin'}
+    ],
+    loans:[
+      {id:'l1',coopId:'coop1',memberId:'m1',amount:500000,rate:5,months:12,start:dSince(80),due:dPlus(280),freq:'MONTHLY',status:'ACTIVE',by:'u_admin'}
+    ],
+    repayments:[
+      {id:'rp1',coopId:'coop1',loanId:'l1',memberId:'m1',amount:43750,date:dSince(75),ref:'REP-001'},
+      {id:'rp2',coopId:'coop1',loanId:'l1',memberId:'m1',amount:43750,date:dSince(45),ref:'REP-002'},
+      {id:'rp3',coopId:'coop1',loanId:'l1',memberId:'m1',amount:43750,date:dSince(15),ref:'REP-003'}
+    ],
+    incomes:[
+      {id:'i1',coopId:'coop1',source:'Member Dues',category:'Dues',amount:500000,date:dSince(150),ref:'',desc:'Monthly dues'},
+      {id:'i2',coopId:'coop1',source:'Member Dues',category:'Dues',amount:500000,date:dSince(90),ref:'',desc:'Monthly dues'},
+      {id:'i3',coopId:'coop1',source:'Member Dues',category:'Dues',amount:500000,date:dSince(30),ref:'',desc:'Monthly dues'},
+      {id:'i4',coopId:'coop1',source:'Registration Fees',category:'Fees',amount:100000,date:dSince(70),ref:'',desc:'New registrations'},
+      {id:'i5',coopId:'coop1',source:'Investment Returns',category:'Investments',amount:250000,date:dSince(40),ref:'',desc:'Fixed deposit returns'}
+    ],
+    expenses:[
+      {id:'e1',coopId:'coop1',category:'Meetings',amount:80000,date:dSince(120),payee:'Event Hall',ref:'',desc:'Annual general meeting'},
+      {id:'e2',coopId:'coop1',category:'Rent',amount:150000,date:dSince(100),payee:'Landlord',ref:'',desc:'Office rent'},
+      {id:'e3',coopId:'coop1',category:'Administration',amount:25000,date:dSince(60),payee:'Stationery Shop',ref:'',desc:'Office supplies'},
+      {id:'e4',coopId:'coop1',category:'Meetings',amount:50000,date:dSince(20),payee:'Event Hall',ref:'',desc:'Quarterly meeting'}
+    ],
+    taxRules:[
+      {id:'tr1',coopId:'coop1',name:'Cooperative Income Tax',taxType:'INCOME_TAX',rate:10,threshold:0,deduction:0,active:true,eff:dSince(200)},
+      {id:'tr2',coopId:'coop1',name:'Dividend Tax',taxType:'DIVIDEND_TAX',rate:5,threshold:100000,deduction:30000,active:true,eff:dSince(200)}
+    ],
+    taxRecords:[
+      {id:'t1',coopId:'coop1',ruleId:'tr1',period:'2026',taxableIncome:1850000,rate:10,liability:185000,paid:50000,status:'PENDING',due:dPlus(14)},
+      {id:'t2',coopId:'coop1',ruleId:'tr2',period:'2026',taxableIncome:300000,rate:5,liability:15000,paid:15000,status:'PAID',due:dSince(-10)}
+    ],
+    notifications:[
+      {id:'n1',coopId:'coop1',userId:'u_admin',type:'MEMBER',title:'New member added',msg:'John Okon (COOP-2026-0002) was registered.',read:true,at:dSince(90)},
+      {id:'n2',coopId:'coop1',userId:'u_admin',type:'LOAN',title:'Loan active',msg:'Loan of ₦500,000 for Mary Effiong is now active.',read:true,at:dSince(79)},
+      {id:'n3',coopId:'coop1',userId:'u_admin',type:'TAX',title:'Tax deadline approaching',msg:'Cooperative Income Tax for 2026 is due in 14 days.',read:false,at:dSince(2)},
+      {id:'n4',coopId:'coop1',userId:'u_member',type:'CONTRIBUTION',title:'Contribution recorded',msg:'₦20,000 Monthly Contribution was recorded for you.',read:false,at:dSince(2)},
+      {id:'n5',coopId:'coop1',userId:'u_member',type:'REPAYMENT',title:'Loan repayment',msg:'₦43,750 was repaid on your loan.',read:false,at:dSince(15)}
+    ],
+    payments:[
+      {id:'p1',coopId:'coop1',planName:'Professional',amount:15000,date:dSince(30),method:'MOCK',ref:'MOCK-1001',status:'SUCCESS'}
+    ],
+    audit:[
+      {id:'a1',coopId:'coop1',userId:'u_admin',action:'SEED',entity:'SYSTEM',at:dSince(200)}
+    ]
+  };
+}
+let db;
+function loadDB{const raw=localStorage.getItem(DB_KEY);if(raw){try{db=JSON.parse(raw);}catch(e){db=seedData;saveDB;}}else{db=seedData;saveDB;}}
+function saveDB{localStorage.setItem(DB_KEY,JSON.stringify(db));}
+
+/* ---------- business logic ---------- */
+function loanTotals(l){
+  const principal=Number(l.amount);
+  const interest=principal*Number(l.rate)/100;
+  const total=principal+interest;
+  const paid=db.repayments.filter(r=>r.loanId===l.id).reduce((s,r)=>s+Number(r.amount),0);
+  return {principal:principal,interest:interest,total:total,paid:paid,outstanding:total-paid};
+}
+function coopStats(coopId){
+  const sum=(arr,k)=>arr.reduce((s,x)=>s+Number(x[k]||0),0);
+  const members=db.members.filter(m=>m.coopId===coopId);
+  const totalContributions=sum(db.contributions.filter(c=>c.coopId===coopId),'amount');
+  const totalLoans=sum(db.loans.filter(l=>l.coopId===coopId),'amount');
+  const paidLoans=sum(db.repayments.filter(r=>r.coopId===coopId),'amount');
+  const totalIncome=sum(db.incomes.filter(i=>i.coopId===coopId),'amount');
+  const totalExpenses=sum(db.expenses.filter(e=>e.coopId===coopId),'amount');
+  const taxLiability=sum(db.taxRecords.filter(t=>t.coopId===coopId),'liability');
+  const taxPaid=sum(db.taxRecords.filter(t=>t.coopId===coopId),'paid');
+  return {
+    members:members.filter(m=>m.status==='ACTIVE').length,
+    totalMembers:members.length,
+    totalContributions:totalContributions,
+    totalLoans:totalLoans,
+    outstandingLoans:Math.max(0,totalLoans-paidLoans),
+    totalIncome:totalIncome,
+    totalExpenses:totalExpenses,
+    net:totalIncome-totalExpenses,
+    taxLiability:taxLiability,
+    taxPaid:taxPaid,
+    outstandingTax:Math.max(0,taxLiability-taxPaid)
+  };
+}
+function monthlySeries(coopId){
+  const out=;const now=new Date;
+  for(let i=5;i>=0;i--){
+    const d=new Date(now.getFullYear,now.getMonth-i,1);
+    const from=d.toISOString;
+    const toNext=new Date(d.getFullYear,d.getMonth+1,1).toISOString;
+    const inR=(iso)=>iso>=from&&iso<toNext;
+    out.push({
+      label:d.toLocaleString('en-US',{month:'short'}),
+      contributions:db.contributions.filter(c=>c.coopId===coopId&&inR(c.date)).reduce((s,c)=>s+Number(c.amount),0),
+      income:db.incomes.filter(x=>x.coopId===coopId&&inR(x.date)).reduce((s,x)=>s+Number(x.amount),0),
+      expenses:db.expenses.filter(x=>x.coopId===coopId&&inR(x.date)).reduce((s,x)=>s+Number(x.amount),0)
+    });
+  }
+  return out;
+}
+function barChart(points,color){
+  const max=Math.max(...points.map(p=>p.value),1);
+  return '<div class="chart">'+points.map(p=>'<div class="chart-col"><div class="chart-single"><div class="chart-bar" style="height:'+Math.round(p.value/max*100)+'%;background:'+color+'"></div></div><span>'+p.label+'</span></div>').join('')+'</div>';
+}
+function barChartMulti(points,colors,names){
+  const max=Math.max(...points.map(p=>p.values),1);
+  return '<div class="chart">'+points.map(p=>'<div class="chart-col"><div class="chart-bars2">'+p.values.map((v,i)=>'<div class="chart-bar" style="height:'+Math.round(v/max*100)+'%;background:'+colors[i]+'"></div>').join('')+'</div><span>'+p.label+'</span></div>').join('')+'</div><div class="legend">'+names.map((n,i)=>'<span class="lg"><i style="background:'+colors[i]+'"></i>'+n+'</span>').join('')+'</div>';
+}
+function goHome{
+  const u=currentUser;
+  location.hash = u.role==='SUPER_ADMIN' ? '#/superadmin' : u.role==='MEMBER' ? '#/portal' : '#/app';
+}
+
+/* ---------- landing / auth views ---------- */
+const FEATURES=[
+  {ic:'👥',t:'Member Management',d:'Digital registration with automatic member numbers, profiles, search, filters and status control.'},
+  {ic:'💰',t:'Contributions & Savings',d:'Shares, savings, monthly and special contributions with payment methods and automatic totals.'},
+  {ic:'🏦',t:'Loan Management',d:'Application, approval, rejection, disbursement and repayment tracking with balances.'},
+  {ic:'📥',t:'Income & Expenses',d:'Track income sources and expense categories; net balance calculated automatically.'},
+  {ic:'🧾',t:'Tax Management',d:'Configurable rules, automatic computation, liability tracking and payment records.'},
+  {ic:'📊',t:'Reports & Analytics',d:'Member, contribution, loan, income, expense and tax reports with CSV export and print.'},
+  {ic:'🔐',t:'Multi-Tenant Security',d:'Separate data per cooperative with role-based access and tenant isolation.'},
+  {ic:'🔔',t:'Notifications',d:'Alerts for members, contributions, loans, repayments, tax deadlines and subscription expiry.'}
+];
+function landing{
+  return '<div class="landing">'
+  +'<header class="l-header"><div class="container l-nav">'
+  +'<a class="logo" href="#/">Coop<span>SaaS</span></a>'
+  +'<nav class="l-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#/login" class="btn btn-outline">Login</a><a href="#/register" class="btn btn-primary">Start Free</a></nav>'
+  +'</div></header>'
+  +'<section class="hero"><div class="container">'
+  +'<span class="hero-badge">Multi-Tenant SaaS for Cooperative Societies</span>'
+  +'<h1>Online Cooperative Society Database &amp; <span class="accent">Tax Management System</span></h1>'
+  +'<p class="lead">Manage members, contributions, loans, income, expenses and tax records from one secure platform — for cooperatives of every size.</p>'
+  +'<div class="hero-ctas"><a href="#/register" class="btn btn-primary btn-lg w-auto" style="padding:13px 26px">Start Free Trial</a><a href="#/login" class="btn btn-outline" style="padding:13px 26px">Login to Demo</a></div>'
+  +'</div></section>'
+  +'<section id="features"><div class="container"><h2 class="sec-title">Everything your cooperative needs</h2>'
+  +'<div class="f-grid">'+FEATURES.map(f=>'<div class="f-card"><div class="f-icon">'+f.ic+'</div><h3>'+f.t+'</h3><p>'+f.d+'</p></div>').join('')+'</div>'
+  +'</div></section>'
+  +'<section id="pricing"><div class="container"><h2 class="sec-title">Simple, transparent pricing</h2>'
+  +'<div class="p-grid">'+db.plans.map(p=>'<div class="p-card'+(p.id==='plan_pro'?' featured':'')+'">'
+    +(p.id==='plan_pro'?'<span class="tag">Most Popular</span>':'')
+    +'<h3>'+p.name+'</h3><div class="price">₦'+p.monthly.toLocaleString+'<small>/month</small></div>'
+    +'<p class="sub">'+(p.memberLimit===-1?'Unlimited members':'Up to '+p.memberLimit+' members')+'</p>'
+    +'<p class="fine">'+(p.id==='plan_basic'?'Core modules + standard reports':p.id==='plan_pro'?'Everything in Basic + tax module, member portal, CSV export':'Everything in Professional + unlimited scale')+'</p>'
+    +'<a href="#/register" class="btn '+(p.id==='plan_pro'?'btn-primary':'btn-outline')+'">Choose '+p.name+'</a>'
+    +'</div>').join('')+'</div>'
+  +'<p class="fine center" style="text-align:center">Demo rates for illustration only. Tax rates are configurable and must be verified per applicable law.</p>'
+  +'</div></section>'
+  +'<footer class="l-footer"><div class="container"><p>© 2026 CoopSaaS — Online Cooperative Society Database &amp; Tax Management System. Working browser demo; production build pairs with Node.js + PostgreSQL.</p></div></footer>'
+  +'</div>';
+}
+function loginView{
+  return '<div class="auth-wrap"><div class="auth-card">'
+  +'<a class="logo" href="#/">Coop<span>SaaS</span></a>'
+  +'<h1>Sign in</h1><p class="muted small">Access your cooperative workspace</p>'
+  +'<form data-form="login" class="form">'
+  +'<label>Email<input name="email" class="input" type="email" required placeholder="you@cooperative.org"></label>'
+  +'<label>Password<input name="password" class="input" type="password" required placeholder=""></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Sign in</button>'
+  +'</form>'
+  +'<div class="demo-box"><p class="muted small"><strong>Demo accounts</strong> — password: Password123!</p>'
+  +'<div class="btns">'
+  +'<button class="btn btn-outline small" data-action="demo" data-email="superadmin@coop.io">Super Admin</button>'
+  +'<button class="btn btn-outline small" data-action="demo" data-email="admin@sunrisecoop.ng">Coop Admin</button>'
+  +'<button class="btn btn-outline small" data-action="demo" data-email="staff@sunrisecoop.ng">Staff</button>'
+  +'<button class="btn btn-outline small" data-action="demo" data-email="mary@example.com">Member</button>'
+  +'</div></div>'
+  +'<p class="muted small center"><a href="#/register">Register your cooperative instead</a></p>'
+  +'</div></div>';
+}
+function registerView{
+  return '<div class="auth-wrap"><div class="auth-card" style="max-width:520px">'
+  +'<a class="logo" href="#/">Coop<span>SaaS</span></a>'
+  +'<h1>Register your cooperative</h1><p class="muted small">Creates your cooperative and administrator account — 14-day trial starts immediately.</p>'
+  +'<form data-form="register" class="form">'
+  +'<label>Cooperative name *<input name="name" class="input" required></label>'
+  +'<div class="grid2">'
+  +'<label>Registration number *<input name="regNumber" class="input" required></label>'
+  +'<label>State<input name="state" class="input"></label>'
+  +'<label>Email<input name="email" class="input" type="email"></label>'
+  +'<label>Phone<input name="phone" class="input"></label>'
+  +'</div>'
+  +'<label>Address<input name="address" class="input"></label>'
+  +'<label>Subscription plan *<select name="planId" class="input" required>'
+  +'<option value="">Select plan…</option>'
+  +db.plans.map(p=>'<option value="'+p.id+'">'+p.name+' — '+(p.memberLimit===-1?'Unlimited':p.memberLimit+' members')+'</option>').join('')
+  +'</select></label>'
+  +'<div class="grid2">'
+  +'<label>Administrator name *<input name="adminName" class="input" required></label>'
+  +'<label>Administrator email *<input name="adminEmail" class="input" type="email" required></label>'
+  +'</div>'
+  +'<label>Password (min 8 characters) *<input name="password" class="input" type="password" minlength="8" required></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Create cooperative &amp; start trial</button>'
+  +'</form>'
+  +'<p class="muted small center"><a href="#/login">Already registered? Sign in</a></p>'
+  +'</div></div>';
+}
+
+/* ---------- app shell ---------- */
+const STAFF_NAV=[
+  ['dashboard','🏠 Dashboard'],['members','👥 Members'],['contributions','💰 Contributions'],
+  ['loans','🏦 Loans'],['income','📥 Income'],['expenses','📤 Expenses'],['taxes','🧾 Taxes'],
+  ['reports','📊 Reports'],['notifications','🔔 Notifications'],['settings','⚙️ Subscription'],['profile','👤 Profile']
+];
+const TITLES={dashboard:'Dashboard',members:'Members',contributions:'Contributions',loans:'Loans',income:'Income',expenses:'Expenses',taxes:'Tax Management',reports:'Reports',notifications:'Notifications',settings:'Subscription & Settings',profile:'Profile',portal:'My Overview'};
+function shell(page,content){
+  const u=currentUser;const coop=currentCoop;
+  const isMember=u.role==='MEMBER';
+  const nav=isMember
+    ?'<a class="nav-link '+(page==='portal'?'active':'')+'" href="#/portal">📊 My Overview</a>'
+    :STAFF_NAV.map(n=>'<a class="nav-link '+(page===n[0]?'active':'')+'" href="#/app/'+n[0]+'">'+n[1]+'</a>').join('');
+  const unread=coop?notifCount(coop.id):0;
+  return '<div class="shell">'
+  +'<aside class="sidebar no-print" id="sidebar">'
+  +'<div class="brand"><a class="logo" href="#/">Coop<span>SaaS</span></a></div>'
+  +'<nav>'+nav+'</nav>'
+  +'<div class="side-foot"><span class="who">'+esc(u.name)+'</span><button class="btn-link danger" data-action="logout">Logout</button></div>'
+  +'</aside>'
+  +'<div class="main">'
+  +'<header class="topbar no-print"><button class="burger" data-action="burger" aria-label="Menu">☰</button>'
+  +'<h2>'+esc(TITLES[page]||'Dashboard')+'</h2>'
+  +'<div class="top-right"><a class="bell" href="'+(isMember?'#/portal':'#/app/notifications')+'">🔔'+(unread?'<span class="count">'+unread+'</span>':'')+'</a><span class="who">'+esc(u.name)+'</span></div>'
+  +'</header><div class="content">'+content+'</div>'
+  +'</div></div>';
+}
+function appView(page){
+  const u=currentUser;
+  if(u.role==='MEMBER')return shell('portal',portalView);
+  if(u.role==='SUPER_ADMIN')return superView;
+  const views={dashboard:dashView,members:membersView,contributions:contribView,loans:loansView,income:incomeView,expenses:expensesView,taxes:taxesView,reports:reportsView,notifications:notifView,settings:settingsView,profile:profileView};
+  const fn=views[page]||dashView;
+  return shell(page,fn);
+}
+
+/* ---------- dashboard ---------- */
+function dashView{
+  const coop=currentCoop;const s=coopStats(coop.id);
+  const ser=monthlySeries(coop.id);
+  const contribChart=barChart(ser.map(x=>({label:x.label,value:x.contributions})),'#4f46e5');
+  const ieChart=barChartMulti(ser.map(x=>({label:x.label,values:[x.income,x.expenses]})),['#10b981','#ef4444'],['Income','Expenses']);
+  const recent=db.notifications.filter(n=>n.coopId===coop.id).sort((a,b)=>b.at.localeCompare(a.at)).slice(0,5);
+  return '<div class="cards grid4">'
+  +statCard('Active Members',s.members,'of '+s.totalMembers+' total')
+  +statCard('Total Contributions',fmt(s.totalContributions),'all-time')
+  +statCard('Outstanding Loans',fmt(s.outstandingLoans),'of '+fmt(s.totalLoans)+' disbursed')
+  +statCard('Net Balance',fmt(s.net),'income − expenses')
+  +statCard('Total Income',fmt(s.totalIncome),'')
+  +statCard('Total Expenses',fmt(s.totalExpenses),'')
+  +statCard('Tax Liability',fmt(s.taxLiability),fmt(s.taxPaid)+' paid')
+  +statCard('Outstanding Tax',fmt(s.outstandingTax),'')
+  +'</div>'
+  +'<div class="cards grid2">'
+  +'<div class="card"><h3>Contributions — last 6 months</h3>'+contribChart+'</div>'
+  +'<div class="card"><h3>Income vs Expenses — last 6 months</h3>'+ieChart+'</div>'
+  +'</div>'
+  +'<div class="card"><h3>Recent Activity</h3>'
+  +(recent.length?recent.map(n=>'<div class="notif '+(n.read?'read':'')+'"><b>'+esc(n.title)+'</b> <span class="muted small">· '+fmtDate(n.at)+'</span><p>'+esc(n.msg)+'</p></div>').join(''):'<p class="empty">No activity yet.</p>')
+  +'</div>';
+}
+
+/* ---------- members ---------- */
+function membersView{
+  const coop=currentCoop;
+  const list=db.members.filter(m=>m.coopId===coop.id).sort((a,b)=>b.joined.localeCompare(a.joined));
+  return '<div class="toolbar">'
+  +'<input id="m-search" class="input" placeholder="Search name / ID / email…" oninput="renderMembersList">'
+  +'<select id="m-status" class="input" onchange="renderMembersList"><option value="">All statuses</option><option>ACTIVE</option><option>INACTIVE</option></select>'
+  +'<button class="btn btn-primary" data-action="add-member">+ Add Member</button>'
+  +'</div><div id="members-list">'+membersTable(list)+'</div>';
+}
+function membersTable(list){
+  if(!list.length)return '<p class="empty">No members found.</p>';
+  return '<div class="table-wrap"><table class="table"><thead><tr><th>Member No.</th><th>Full Name</th><th>Email</th><th>Phone</th><th>Occupation</th><th>Joined</th><th>Status</th><th class="no-print">Actions</th></tr></thead><tbody>'
+  +list.map(m=>'<tr><td>'+esc(m.memberNo)+'</td><td>'+esc(m.fullName)+'</td><td>'+esc(m.email||'—')+'</td><td>'+esc(m.phone||'—')+'</td><td>'+esc(m.occupation||'—')+'</td><td>'+fmtDate(m.joined)+'</td><td>'+badge(m.status)+'</td>'
+  +'<td class="no-print"><div class="row-actions"><button class="btn-tiny" data-action="view-member" data-id="'+m.id+'">View</button><button class="btn-tiny" data-action="edit-member" data-id="'+m.id+'">Edit</button><button class="btn-tiny danger" data-action="del-member" data-id="'+m.id+'">Del</button></div></td></tr>').join('')
+  +'</tbody></table></div>';
+}
+function renderMembersList{
+  const q=(document.getElementById('m-search').value||'').toLowerCase;
+  const st=document.getElementById('m-status').value;
+  const coop=currentCoop;
+  const list=db.members.filter(m=>m.coopId===coop.id).filter(m=>{
+    const hit=!q||m.fullName.toLowerCase.includes(q)||m.memberNo.toLowerCase.includes(q)||(m.email||'').toLowerCase.includes(q);
+    return hit&&(!st||m.status===st);
+  }).sort((a,b)=>b.joined.localeCompare(a.joined));
+  const el=document.getElementById('members-list');
+  if(el)el.innerHTML=membersTable(list);
+}
+function memberOptions{
+  const coop=currentCoop;
+  return db.members.filter(m=>m.coopId===coop.id&&m.status==='ACTIVE')
+    .map(m=>'<option value="'+m.id+'">'+esc(m.fullName)+' ('+esc(m.memberNo)+')</option>').join('');
+}
+function memberModal(m){
+  const isEdit=!!m;
+  return '<div class="modal-head"><h3>'+(isEdit?'Edit Member':'Add Member')+'</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="member" class="form">'
+  +(isEdit?'<input type="hidden" name="id" value="'+m.id+'">':'')
+  +'<label>Full name *<input name="fullName" class="input" required value="'+esc(m?m.fullName:'')+'"></label>'
+  +'<div class="grid2"><label>Email<input name="email" class="input" type="email" value="'+esc(m?m.email:'')+'"></label>'
+  +'<label>Phone<input name="phone" class="input" value="'+esc(m?m.phone:'')+'"></label></div>'
+  +'<label>Address<input name="address" class="input" value="'+esc(m?m.address:'')+'"></label>'
+  +'<div class="grid2"><label>Occupation<input name="occupation" class="input" value="'+esc(m?m.occupation:'')+'"></label>'
+  +'<label>Membership date<input name="joined" class="input" type="date" value="'+((m?m.joined:new Date.toISOString).slice(0,10))+'"></label></div>'
+  +'<button class="btn btn-primary w-full" type="submit">'+(isEdit?'Save changes':'Add member')+'</button>'
+  +'</form>';
+}
+function memberDetailModal(id){
+  const m=db.members.find(x=>x.id===id);
+  if(!m)return '';
+  const cs=db.contributions.filter(c=>c.memberId===id).sort((a,b)=>b.date.localeCompare(a.date));
+  const sumC=cs.reduce((s,c)=>s+Number(c.amount),0);
+  const loans=db.loans.filter(l=>l.memberId===id).map(l=>({l:l,t:loanTotals(l)}));
+  const tx=db.taxRecords.filter(t=>t.memberId===id);
+  return '<div class="modal-head"><h3>'+esc(m.fullName)+'</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<p class="muted small">'+esc(m.memberNo)+' · '+esc(m.email||'')+' · '+esc(m.phone||'')+' · Joined '+fmtDate(m.joined)+' · '+badge(m.status)+'</p>'
+  +'<div class="cards grid3" style="margin-top:12px">'
+  +'<div class="mini-stat"><b>'+fmt(sumC)+'</b><span>Contributions</span></div>'
+  +'<div class="mini-stat"><b>'+loans.length+'</b><span>Loans</span></div>'
+  +'<div class="mini-stat"><b>'+esc(m.occupation||'—')+'</b><span>Occupation</span></div>'
+  +'</div>'
+  +'<h4>Contributions ('+cs.length+')</h4>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Method</th></tr></thead><tbody>'
+  +(cs.length?cs.map(c=>'<tr><td>'+fmtDate(c.date)+'</td><td>'+esc(c.type.replace(/_/g,' '))+'</td><td>'+fmt(c.amount)+'</td><td>'+esc(c.method)+'</td></tr>').join(''):'<tr><td colspan="4" class="empty">None</td></tr>')
+  +'</tbody></table></div>'
+  +'<h4>Loans ('+loans.length+')</h4>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Amount</th><th>Total Payable</th><th>Paid</th><th>Outstanding</th><th>Status</th></tr></thead><tbody>'
+  +(loans.length?loans.map(x=>'<tr><td>'+fmt(x.l.amount)+'</td><td>'+fmt(x.t.total)+'</td><td>'+fmt(x.t.paid)+'</td><td>'+fmt(x.t.outstanding)+'</td><td>'+badge(x.l.status)+'</td></tr>').join(''):'<tr><td colspan="5" class="empty">None</td></tr>')
+  +'</tbody></table></div>'
+  +'<h4>Tax Records ('+tx.length+')</h4>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Period</th><th>Liability</th><th>Paid</th><th>Status</th></tr></thead><tbody>'
+  +(tx.length?tx.map(r=>'<tr><td>'+esc(r.period)+'</td><td>'+fmt(r.liability)+'</td><td>'+fmt(r.paid)+'</td><td>'+badge(r.status)+'</td></tr>').join(''):'<tr><td colspan="4" class="empty">None</td></tr>')
+  +'</tbody></table></div>';
+}
+
+/* ---------- contributions ---------- */
+function contribView{
+  const coop=currentCoop;
+  const list=db.contributions.filter(c=>c.coopId===coop.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const total=list.reduce((s,c)=>s+Number(c.amount),0);
+  return '<div class="toolbar"><div><strong>'+list.length+'</strong> records · Total: <strong>'+fmt(total)+'</strong></div>'
+  +'<button class="btn btn-primary" data-action="add-contribution">+ Record Contribution</button></div>'
+  +(list.length?'<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Member</th><th>Type</th><th>Amount</th><th>Method</th><th>Reference</th><th class="no-print"></th></tr></thead><tbody>'
+  +list.map(c=>'<tr><td>'+fmtDate(c.date)+'</td><td>'+esc(memberName(c.memberId))+'</td><td>'+badge(c.type.replace(/_/g,' '))+'</td><td>'+fmt(c.amount)+'</td><td>'+esc(c.method)+'</td><td>'+esc(c.ref||'—')+'</td>'
+  +'<td class="no-print"><button class="btn-tiny danger" data-action="del-contribution" data-id="'+c.id+'">Del</button></td></tr>').join('')
+  +'</tbody></table></div>':'<p class="empty">No contributions yet. Record the first one.</p>');
+}
+function contribModal{
+  return '<div class="modal-head"><h3>Record Contribution</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="contribution" class="form">'
+  +'<label>Member *<select name="memberId" class="input" required>'+memberOptions+'</select></label>'
+  +'<div class="grid2"><label>Type *<select name="type" class="input" required>'
+  +['SHARES','SAVINGS','MONTHLY_CONTRIBUTION','SPECIAL_CONTRIBUTION'].map(t=>'<option>'+t+'</option>').join('')
+  +'</select></label><label>Amount (₦) *<input name="amount" class="input" type="number" min="1" required></label>'
+  +'<label>Method<select name="method" class="input">'+['CASH','TRANSFER','CARD','OTHER'].map(t=>'<option>'+t+'</option>').join('')+'</select></label>'
+  +'<label>Date<input name="date" class="input" type="date" value="'+new Date.toISOString.slice(0,10)+'"></label></div>'
+  +'<label>Reference<input name="ref" class="input"></label>'
+  +'<label>Description<textarea name="desc" class="input" rows="2"></textarea></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Save contribution</button></form>';
+}
+
+/* ---------- loans ---------- */
+function loansView{
+  const coop=currentCoop;
+  const loans=db.loans.filter(l=>l.coopId===coop.id).map(l=>({l:l,t:loanTotals(l)})).sort((a,b)=>b.l.start.localeCompare(a.l.start));
+  return '<div class="toolbar"><strong>'+loans.length+'</strong> loans</div>'
+  +(loans.length?'<div class="table-wrap"><table class="table"><thead><tr><th>Member</th><th>Amount</th><th>Rate</th><th>Total Payable</th><th>Paid</th><th>Outstanding</th><th>Due</th><th>Status</th><th class="no-print">Actions</th></tr></thead><tbody>'
+  +loans.map(x=>{const l=x.l,t=x.t;
+    let acts='';
+    if(l.status==='PENDING')acts='<button class="btn-tiny" data-action="loan-approve" data-id="'+l.id+'">Approve</button><button class="btn-tiny danger" data-action="loan-reject" data-id="'+l.id+'">Reject</button>';
+    else if(l.status==='APPROVED')acts='<button class="btn-tiny" data-action="loan-disburse" data-id="'+l.id+'">Disburse</button>';
+    else if(l.status==='ACTIVE'||l.status==='PARTIALLY_PAID')acts='<button class="btn-tiny" data-action="loan-repay-open" data-id="'+l.id+'">Repay</button>';
+    return '<tr><td>'+esc(memberName(l.memberId))+'</td><td>'+fmt(l.amount)+'</td><td>'+l.rate+'%</td><td>'+fmt(t.total)+'</td><td>'+fmt(t.paid)+'</td><td><strong>'+fmt(t.outstanding)+'</strong></td><td>'+fmtDate(l.due)+'</td><td>'+badge(l.status)+'</td><td class="no-print"><div class="row-actions">'+acts+'</div></td></tr>';
+  }).join('')
+  +'</tbody></table></div>':'<p class="empty">No loans yet.</p>')
+  +'<button class="btn btn-primary" data-action="add-loan" style="margin-top:14px">+ New Loan Application</button>';
+}
+function loanModal{
+  return '<div class="modal-head"><h3>Apply for Loan</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="loan" class="form">'
+  +'<label>Member *<select name="memberId" class="input" required>'+memberOptions+'</select></label>'
+  +'<div class="grid2">'
+  +'<label>Amount (₦) *<input name="amount" class="input" type="number" min="1" required></label>'
+  +'<label>Interest rate (%) *<input name="rate" class="input" type="number" step="0.1" value="5" required></label>'
+  +'<label>Duration (months) *<input name="months" class="input" type="number" min="1" value="12" required></label>'
+  +'<label>Frequency<select name="freq" class="input">'+['MONTHLY','WEEKLY','QUARTERLY'].map(t=>'<option>'+t+'</option>').join('')+'</select></label>'
+  +'</div>'
+  +'<label>Start date<input name="start" class="input" type="date" value="'+new Date.toISOString.slice(0,10)+'"></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Submit application</button></form>';
+}
+function repayModal(l){
+  const t=loanTotals(l);
+  return '<div class="modal-head"><h3>Repayment — '+esc(memberName(l.memberId))+'</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="repay" class="form">'
+  +'<input type="hidden" name="loanId" value="'+l.id+'">'
+  +'<p class="muted small">Outstanding balance: <strong>'+fmt(t.outstanding)+'</strong></p>'
+  +'<label>Amount *<input name="amount" class="input" type="number" min="1" max="'+t.outstanding+'" required></label>'
+  +'<label>Date<input name="date" class="input" type="date" value="'+new Date.toISOString.slice(0,10)+'"></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Record payment</button></form>';
+}
+
+/* ---------- income & expenses ---------- */
+function incomeView{
+  const coop=currentCoop;
+  const list=db.incomes.filter(i=>i.coopId===coop.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const total=list.reduce((s,i)=>s+Number(i.amount),0);
+  return '<div class="toolbar"><div><strong>'+list.length+'</strong> records · Total income: <strong>'+fmt(total)+'</strong></div>'
+  +'<button class="btn btn-primary" data-action="add-income">+ Add Income</button></div>'
+  +(list.length?'<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Source</th><th>Category</th><th>Amount</th><th>Reference</th><th class="no-print"></th></tr></thead><tbody>'
+  +list.map(i=>'<tr><td>'+fmtDate(i.date)+'</td><td>'+esc(i.source)+'</td><td>'+esc(i.category)+'</td><td>'+fmt(i.amount)+'</td><td>'+esc(i.ref||'—')+'</td>'
+  +'<td class="no-print"><button class="btn-tiny danger" data-action="del-income" data-id="'+i.id+'">Del</button></td></tr>').join('')
+  +'</tbody></table></div>':'<p class="empty">No income recorded yet.</p>');
+}
+function incomeModal{
+  return '<div class="modal-head"><h3>Add Income</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="income" class="form">'
+  +'<label>Source *<input name="source" class="input" required></label>'
+  +'<div class="grid2"><label>Category *<input name="category" class="input" required></label>'
+  +'<label>Amount (₦) *<input name="amount" class="input" type="number" min="1" required></label></div>'
+  +'<div class="grid2"><label>Date<input name="date" class="input" type="date" value="'+new Date.toISOString.slice(0,10)+'"></label>'
+  +'<label>Reference<input name="ref" class="input"></label></div>'
+  +'<label>Description<textarea name="desc" class="input" rows="2"></textarea></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Save income</button></form>';
+}
+function expensesView{
+  const coop=currentCoop;
+  const list=db.expenses.filter(i=>i.coopId===coop.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const total=list.reduce((s,i)=>s+Number(i.amount),0);
+  return '<div class="toolbar"><div><strong>'+list.length+'</strong> records · Total expenses: <strong>'+fmt(total)+'</strong></div>'
+  +'<button class="btn btn-primary" data-action="add-expense">+ Add Expense</button></div>'
+  +(list.length?'<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Category</th><th>Amount</th><th>Payee</th><th>Reference</th><th class="no-print"></th></tr></thead><tbody>'
+  +list.map(i=>'<tr><td>'+fmtDate(i.date)+'</td><td>'+esc(i.category)+'</td><td>'+fmt(i.amount)+'</td><td>'+esc(i.payee||'—')+'</td><td>'+esc(i.ref||'—')+'</td>'
+  +'<td class="no-print"><button class="btn-tiny danger" data-action="del-expense" data-id="'+i.id+'">Del</button></td></tr>').join('')
+  +'</tbody></table></div>':'<p class="empty">No expenses recorded yet.</p>');
+}
+function expenseModal{
+  return '<div class="modal-head"><h3>Add Expense</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="expense" class="form">'
+  +'<label>Category *<input name="category" class="input" required></label>'
+  +'<div class="grid2"><label>Amount (₦) *<input name="amount" class="input" type="number" min="1" required></label>'
+  +'<label>Payee<input name="payee" class="input"></label></div>'
+  +'<div class="grid2"><label>Date<input name="date" class="input" type="date" value="'+new Date.toISOString.slice(0,10)+'"></label>'
+  +'<label>Reference<input name="ref" class="input"></label></div>'
+  +'<label>Description<textarea name="desc" class="input" rows="2"></textarea></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Save expense</button></form>';
+}
+
+/* ---------- taxes ---------- */
+function taxesView{
+  const coop=currentCoop;
+  const rules=db.taxRules.filter(r=>r.coopId===coop.id);
+  const records=db.taxRecords.filter(r=>r.coopId===coop.id).sort((a,b)=>b.period.localeCompare(a.period));
+  const liability=records.reduce((s,r)=>s+Number(r.liability),0);
+  const paid=records.reduce((s,r)=>s+Number(r.paid),0);
+  const activeRules=rules.filter(r=>r.active).map(r=>'<option value="'+r.id+'">'+esc(r.name)+' ('+r.rate+'%)</option>').join('');
+  return '<div class="cards grid3">'
+  +statCard('Tax Liability',fmt(liability),'')
+  +statCard('Tax Paid',fmt(paid),'')
+  +statCard('Outstanding Tax',fmt(Math.max(0,liability-paid)),'')
+  +'</div>'
+  +'<div class="card"><h3>Compute Tax</h3>'
+  +'<form data-form="taxcompute" class="form inline">'
+  +'<select name="ruleId" class="input" required><option value="">Select active rule…</option>'+activeRules+'</select>'
+  +'<input name="period" class="input" value="'+new Date.getFullYear+'" style="max-width:110px">'
+  +'<button class="btn btn-primary" type="submit">Compute</button>'
+  +'</form>'
+  +'<p class="fine">Taxable Income = Gross Income − Allowable Deductions · Tax Liability = Taxable Income × Rate. Demo engine with configurable rules — verify rates per applicable law with a qualified tax professional.</p>'
+  +'</div>'
+  +'<div class="card"><div class="toolbar"><h3>Tax Rules</h3><button class="btn btn-primary small" data-action="add-taxrule" style="margin-left:auto">+ Add Rule</button></div>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Name</th><th>Type</th><th>Rate %</th><th>Threshold</th><th>Deduction</th><th>Status</th><th class="no-print"></th></tr></thead><tbody>'
+  +(rules.length?rules.map(r=>'<tr><td>'+esc(r.name)+'</td><td>'+esc(r.taxType)+'</td><td>'+r.rate+'%</td><td>'+fmt(r.threshold)+'</td><td>'+fmt(r.deduction)+'</td><td>'+badge(r.active?'ACTIVE':'INACTIVE')+'</td><td class="no-print"><button class="btn-tiny danger" data-action="del-taxrule" data-id="'+r.id+'">Del</button></td></tr>').join(''):'<tr><td colspan="7" class="empty">No rules yet — add your first rule.</td></tr>')
+  +'</tbody></table></div></div>'
+  +'<div class="card"><h3>Tax Records</h3>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Period</th><th>Rule</th><th>Taxable Income</th><th>Liability</th><th>Paid</th><th>Outstanding</th><th>Status</th><th class="no-print"></th></tr></thead><tbody>'
+  +(records.length?records.map(r=>{const rule=db.taxRules.find(x=>x.id===r.ruleId);
+    return '<tr><td>'+esc(r.period)+'</td><td>'+(rule?esc(rule.name):'—')+'</td><td>'+fmt(r.taxableIncome)+'</td><td>'+fmt(r.liability)+'</td><td>'+fmt(r.paid)+'</td><td>'+fmt(Math.max(0,r.liability-r.paid))+'</td><td>'+badge(r.status)+'</td>'
+    +'<td class="no-print">'+(r.status!=='PAID'?'<button class="btn-tiny" data-action="tax-pay-open" data-id="'+r.id+'">Pay</button>':'')+'</td></tr>';}).join(''):'<tr><td colspan="8" class="empty">No tax records yet — run a computation above.</td></tr>')
+  +'</tbody></table></div></div>';
+}
+function taxRuleModal{
+  return '<div class="modal-head"><h3>Add Tax Rule</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="taxrule" class="form">'
+  +'<label>Rule name *<input name="name" class="input" required placeholder="e.g. Cooperative Income Tax (configure per law)"></label>'
+  +'<div class="grid2"><label>Tax type *<input name="taxType" class="input" required></label>'
+  +'<label>Rate (%) *<input name="rate" class="input" type="number" step="0.01" required></label>'
+  +'<label>Threshold (₦)<input name="threshold" class="input" type="number"></label>'
+  +'<label>Allowable deduction (₦)<input name="deduction" class="input" type="number"></label></div>'
+  +'<label>Effective date<input name="eff" class="input" type="date" value="'+new Date.toISOString.slice(0,10)+'"></label>'
+  +'<label>Active<select name="active" class="input"><option value="true">Yes</option><option value="false">No</option></select></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Save rule</button>'
+  +'<p class="fine">Rates entered here are configurable placeholders — not legal advice.</p></form>';
+}
+function taxPayModal(r){
+  return '<div class="modal-head"><h3>Record Tax Payment</h3><button class="modal-x" data-action="close">×</button></div>'
+  +'<form data-form="taxpay" class="form">'
+  +'<input type="hidden" name="recordId" value="'+r.id+'">'
+  +'<p class="muted small">Outstanding: <strong>'+fmt(Math.max(0,r.liability-r.paid))+'</strong></p>'
+  +'<label>Amount *<input name="amount" class="input" type="number" min="1" required></label>'
+  +'<button class="btn btn-primary w-full" type="submit">Record payment</button></form>';
+}
+
+/* ---------- reports ---------- */
+let ACTIVE_REPORT='members';
+function reportsView{
+  const tabs=['members','contributions','loans','incomes','expenses','taxes'];
+  return '<div class="toolbar">'
+  +tabs.map(t=>'<button class="btn '+(ACTIVE_REPORT===t?'btn-primary':'btn-outline')+' small" data-action="report-tab" data-type="'+t+'">'+t.charAt(0).toUpperCase+t.slice(1)+'</button>').join('')
+  +'</div>'
+  +'<div class="toolbar no-print">'
+  +'<label class="small">From <input type="date" id="r-from" class="input" onchange="renderReports"></label>'
+  +'<label class="small">To <input type="date" id="r-to" class="input" onchange="renderReports"></label>'
+  +'<button class="btn btn-outline small" data-action="export">⬇ CSV Export</button>'
+  +'<button class="btn btn-outline small" data-action="print">🖨 Print</button>'
+  +'</div><div id="report-body">'+reportBody+'</div>';
+}
+function reportRows(type,from,to){
+  const coop=currentCoop;
+  const inRange=(iso)=>{if(!from&&!to)return true;const t=new Date(iso).getTime;if(from&&t<new Date(from).getTime)return false;if(to&&t>new Date(to+'T23:59:59').getTime)return false;return true;};
+  if(type==='members')return db.members.filter(m=>m.coopId===coop.id).map(m=>({MemberNo:m.memberNo,Name:m.fullName,Email:m.email||'',Phone:m.phone||'',Occupation:m.occupation||'',Status:m.status,Joined:fmtDate(m.joined)}));
+  if(type==='contributions')return db.contributions.filter(c=>c.coopId===coop.id&&inRange(c.date)).map(c=>({Date:fmtDate(c.date),Member:memberName(c.memberId),Type:c.type.replace(/_/g,' '),Amount:Number(c.amount),Method:c.method,Reference:c.ref||''}));
+  if(type==='loans')return db.loans.filter(l=>l.coopId===coop.id&&inRange(l.start)).map(l=>{const t=loanTotals(l);return {Member:memberName(l.memberId),Amount:Number(l.amount),Rate:l.rate+'%',TotalPayable:Number(t.total),Paid:Number(t.paid),Outstanding:Number(t.outstanding),Status:l.status,Due:fmtDate(l.due)};});
+  if(type==='incomes')return db.incomes.filter(i=>i.coopId===coop.id&&inRange(i.date)).map(i=>({Date:fmtDate(i.date),Source:i.source,Category:i.category,Amount:Number(i.amount),Reference:i.ref||''}));
+  if(type==='expenses')return db.expenses.filter(e=>e.coopId===coop.id&&inRange(e.date)).map(e=>({Date:fmtDate(e.date),Category:e.category,Amount:Number(e.amount),Payee:e.payee||'',Reference:e.ref||''}));
+  if(type==='taxes')return db.taxRecords.filter(t=>t.coopId===coop.id).map(r=>{const rule=db.taxRules.find(x=>x.id===r.ruleId);return {Period:r.period,Rule:rule?rule.name:'',TaxableIncome:Number(r.taxableIncome),Liability:Number(r.liability),Paid:Number(r.paid),Outstanding:Number(Math.max(0,r.liability-r.paid)),Status:r.status};});
+  return;
+}
+function reportBody{
+  const from=(document.getElementById('r-from')||{}).value||'';
+  const to=(document.getElementById('r-to')||{}).value||'';
+  const rows=reportRows(ACTIVE_REPORT,from,to);
+  if(!rows.length)return '<p class="empty">No records in the selected range.</p>';
+  return '<div class="table-wrap"><table class="table"><thead><tr>'+Object.keys(rows[0]).map(k=>'<th>'+esc(k)+'</th>').join('')+'</tr></thead><tbody>'
+  +rows.map(r=>'<tr>'+Object.values(r).map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')
+  +'</tbody></table></div>';
+}
+function renderReports{const el=document.getElementById('report-body');if(el)el.innerHTML=reportBody;}
+
+/* ---------- notifications ---------- */
+function notifView{
+  const u=currentUser;const coop=currentCoop;
+  const list=db.notifications.filter(n=>n.coopId===coop.id&&(!n.userId||n.userId===u.id)).sort((a,b)=>b.at.localeCompare(a.at));
+  const unread=list.filter(n=>!n.read).length;
+  return '<div class="toolbar"><h3>Notifications ('+unread+' unread)</h3>'
+  +'<button class="btn btn-outline small" data-action="mark-all" style="margin-left:auto">Mark all read</button></div>'
+  +(list.length?list.map(n=>'<div class="notif '+(n.read?'read':'')+'" data-action="read-one" data-id="'+n.id+'"><div><b>'+esc(n.title)+'</b> <span class="muted small">· '+fmtDate(n.at)+'</span></div><p>'+esc(n.msg)+'</p></div>').join(''):'<p class="empty">No notifications.</p>');
+}
+
+/* ---------- settings / profile ---------- */
+function settingsView{
+  const coop=currentCoop;
+  const pays=db.payments.filter(p=>p.coopId===coop.id).sort((a,b)=>b.date.localeCompare(a.date));
+  return '<div class="card"><h3>Current Subscription</h3>'
+  +'<p>Plan: <strong>'+esc(coop.planName)+'</strong> · Status: '+badge(coop.status)+' · Member limit: '+(coop.memberLimit===-1?'Unlimited':coop.memberLimit)+'</p>'
+  +(coop.status==='TRIAL'?'<p class="fine">Trial expires '+fmtDate(coop.trialEnd)+'.</p>':'')
+  +'</div>'
+  +'<div class="p-grid">'+db.plans.map(p=>'<div class="p-card '+(coop.planId===p.id?'current':'')+'">'
+  +'<h3>'+p.name+'</h3><div class="price">₦'+p.monthly.toLocaleString+'<small>/mo</small></div>'
+  +'<p class="sub">'+(p.memberLimit===-1?'Unlimited members':'Up to '+p.memberLimit+' members')+'</p>'
+  +'<div class="row-actions"><button class="btn btn-primary small" data-action="subscribe" data-plan="'+p.id+'" data-billing="MONTHLY">Monthly</button>'
+  +'<button class="btn btn-outline small" data-action="subscribe" data-plan="'+p.id+'" data-billing="YEARLY">Yearly</button></div>'
+  +'</div>').join('')+'</div>'
+  +'<div class="card"><h3>Payment History</h3>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Plan</th><th>Amount</th><th>Method</th><th>Reference</th><th>Status</th></tr></thead><tbody>'
+  +(pays.length?pays.map(p=>'<tr><td>'+fmtDate(p.date)+'</td><td>'+esc(p.planName)+'</td><td>'+fmt(p.amount)+'</td><td>'+esc(p.method)+'</td><td>'+esc(p.ref)+'</td><td>'+badge(p.status)+'</td></tr>').join(''):'<tr><td colspan="6" class="empty">No payments yet.</td></tr>')
+  +'</tbody></table></div>'
+  +'<p class="fine">Mock payment processing only — Paystack / Flutterwave / Stripe can be attached in the production build.</p></div>';
+}
+function profileView{
+  const u=currentUser;const coop=currentCoop;
+  return '<div class="card"><h3>Profile</h3>'
+  +'<p><strong>'+esc(u.name)+'</strong></p><p class="muted">'+esc(u.email)+'</p>'
+  +'<p>Role: '+badge(u.role.replace(/_/g,' '),'blue')+'</p>'
+  +(coop?'<p>Cooperative: '+esc(coop.name)+'</p>':'')
+  +'<p class="fine">Password change and avatar uploads are part of the production (server) build.</p></div>';
+}
+
+/* ---------- member portal ---------- */
+function portalView{
+  const u=currentUser;const coop=currentCoop;
+  const m=db.members.find(x=>x.id===u.memberId);
+  if(!m)return '<p class="empty">No member record linked to this account.</p>';
+  const cs=db.contributions.filter(c=>c.coopId===coop.id&&c.memberId===m.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const loans=db.loans.filter(l=>l.coopId===coop.id&&l.memberId===m.id).map(l=>({l:l,t:loanTotals(l)}));
+  const tx=db.taxRecords.filter(t=>t.coopId===coop.id&&t.memberId===m.id);
+  const notifs=db.notifications.filter(n=>n.coopId===coop.id&&(!n.userId||n.userId===u.id)).sort((a,b)=>b.at.localeCompare(a.at)).slice(0,6);
+  const sumC=cs.reduce((s,c)=>s+Number(c.amount),0);
+  const sumLoans=loans.reduce((s,x)=>s+x.t.outstanding,0);
+  const sumTax=tx.reduce((s,t)=>s+Math.max(0,t.liability-t.paid),0);
+  return '<div class="card"><h3>'+esc(m.fullName)+'</h3>'
+  +'<p class="muted small">'+esc(m.memberNo)+' · Joined '+fmtDate(m.joined)+' · '+esc(m.occupation||'')+' · '+badge(m.status)+'</p></div>'
+  +'<div class="cards grid4">'
+  +statCard('My Contributions',fmt(sumC),cs.length+' payments')
+  +statCard('Outstanding Loan',fmt(sumLoans),'')
+  +statCard('Outstanding Tax',fmt(sumTax),'')
+  +statCard('Savings Position',fmt(sumC-sumLoans),'')
+  +'</div>'
+  +'<div class="card"><h3>My Contributions</h3>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Method</th></tr></thead><tbody>'
+  +(cs.length?cs.map(c=>'<tr><td>'+fmtDate(c.date)+'</td><td>'+esc(c.type.replace(/_/g,' '))+'</td><td>'+fmt(c.amount)+'</td><td>'+esc(c.method)+'</td></tr>').join(''):'<tr><td colspan="4" class="empty">No contributions yet.</td></tr>')
+  +'</tbody></table></div></div>'
+  +'<div class="card"><h3>My Loans</h3>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Amount</th><th>Total Payable</th><th>Paid</th><th>Outstanding</th><th>Due</th><th>Status</th></tr></thead><tbody>'
+  +(loans.length?loans.map(x=>'<tr><td>'+fmt(x.l.amount)+'</td><td>'+fmt(x.t.total)+'</td><td>'+fmt(x.t.paid)+'</td><td>'+fmt(x.t.outstanding)+'</td><td>'+fmtDate(x.l.due)+'</td><td>'+badge(x.l.status)+'</td></tr>').join(''):'<tr><td colspan="6" class="empty">No loans.</td></tr>')
+  +'</tbody></table></div></div>'
+  +'<div class="card"><h3>My Tax Records</h3>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Period</th><th>Liability</th><th>Paid</th><th>Outstanding</th><th>Status</th></tr></thead><tbody>'
+  +(tx.length?tx.map(r=>'<tr><td>'+esc(r.period)+'</td><td>'+fmt(r.liability)+'</td><td>'+fmt(r.paid)+'</td><td>'+fmt(Math.max(0,r.liability-r.paid))+'</td><td>'+badge(r.status)+'</td></tr>').join(''):'<tr><td colspan="5" class="empty">No tax records.</td></tr>')
+  +'</tbody></table></div></div>'
+  +'<div class="card"><h3>Notifications</h3>'
+  +(notifs.length?notifs.map(n=>'<div class="notif '+(n.read?'read':'')+'"><b>'+esc(n.title)+'</b> <span class="muted small">· '+fmtDate(n.at)+'</span><p>'+esc(n.msg)+'</p></div>').join(''):'<p class="empty">All caught up.</p>')
+  +'</div>'
+  +'<p class="fine">Privacy: you only ever see your own contributions, loans and tax records — member isolation is enforced.</p>';
+}
+
+/* ---------- super admin ---------- */
+function superView{
+  const coops=db.coops,users=db.users,pays=db.payments;
+  const byStatus={};coops.forEach(c=>byStatus[c.status]=(byStatus[c.status]||0)+1);
+  const revenue=pays.reduce((s,p)=>s+Number(p.amount),0);
+  return '<div class="shell"><aside class="sidebar no-print"><div class="brand"><a class="logo" href="#/">Coop<span>SaaS</span></a></div>'
+  +'<nav><a class="nav-link active" href="#/superadmin">🌐 Platform Overview</a><a class="nav-link" href="#/">← Back to Site</a></nav>'
+  +'<div class="side-foot"><span class="who">'+esc(currentUser.name)+'</span><button class="btn-link danger" data-action="logout">Logout</button></div></aside>'
+  +'<div class="main"><header class="topbar no-print"><h2>Super Admin</h2><div class="top-right"><span class="who">'+esc(currentUser.name)+'</span></div></header>'
+  +'<div class="content">'
+  +'<div class="cards grid4">'
+  +statCard('Cooperatives',coops.length,'')
+  +statCard('Active',byStatus['ACTIVE']||0,'')
+  +statCard('Trial',byStatus['TRIAL']||0,'')
+  +statCard('Platform Revenue',fmt(revenue),'')
+  +'</div>'
+  +'<div class="card"><h3>Cooperatives</h3>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Name</th><th>Reg No.</th><th>Plan</th><th>Members</th><th>Status</th></tr></thead><tbody>'
+  +coops.map(c=>'<tr><td>'+esc(c.name)+'</td><td>'+esc(c.regNumber)+'</td><td>'+esc(c.planName)+'</td>'
+  +'<td>'+db.members.filter(m=>m.coopId===c.id).length+'/'+(c.memberLimit===-1?'∞':c.memberLimit)+'</td>'
+  +'<td><select class="input" data-action="coop-status" data-id="'+c.id+'" style="min-width:130px">'
+  +['TRIAL','ACTIVE','EXPIRED','SUSPENDED','CANCELLED'].map(s=>'<option '+(c.status===s?'selected':'')+'>'+s+'</option>').join('')
+  +'</select></td></tr>').join('')
+  +'</tbody></table></div></div>'
+  +'<div class="card"><h3>Payments</h3>'
+  +'<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Cooperative</th><th>Plan</th><th>Amount</th><th>Method</th><th>Reference</th></tr></thead><tbody>'
+  +(pays.length?pays.map(p=>'<tr><td>'+fmtDate(p.date)+'</td><td>'+esc((db.coops.find(c=>c.id===p.coopId)||{}).name||'—')+'</td><td>'+esc(p.planName)+'</td><td>'+fmt(p.amount)+'</td><td>'+esc(p.method)+'</td><td>'+esc(p.ref)+'</td></tr>').join(''):'<tr><td colspan="6" class="empty">No payments yet.</td></tr>')
+  +'</tbody></table></div></div>'
+  +'<div class="card"><h3>Users</h3><p><strong>'+users.length+'</strong> accounts across the platform ('+users.filter(u=>u.role==='SUPER_ADMIN').length+' super admin, '+users.filter(u=>u.role==='COOP_ADMIN').length+' coop admins, '+users.filter(u=>u.role==='STAFF').length+' staff, '+users.filter(u=>u.role==='MEMBER').length+' members).</p></div>'
+  +'</div></div></div>';
+}
+
+/* ---------- actions ---------- */
+const ACTIONS={
+  logout{
+    localStorage.removeItem(SESSION_KEY);
+    toast('Logged out','info');
+    location.hash='#/';
+  },
+  demo(el){
+    const u=db.users.find(x=>x.email===el.dataset.email);
+    if(!u)return;
+    localStorage.setItem(SESSION_KEY,u.id);
+    toast('Signed in as '+u.name,'success');
+    goHome;
+  },
+  burger{
+    document.getElementById('sidebar').classList.toggle('open');
+  },
+  add-member{openModal(memberModal(null));},
+  edit-member(el){const m=db.members.find(x=>x.id===el.dataset.id);openModal(memberModal(m));},
+  view-member(el){openModal(memberDetailModal(el.dataset.id));},
+  del-member(el){
+    if(!confirm('Delete this member and all their records? This cannot be undone.'))return;
+    const id=el.dataset.id;
+    db.members=db.members.filter(m=>m.id!==id);
+    db.contributions=db.contributions.filter(c=>c.memberId!==id);
+    db.loans=db.loans.filter(l=>l.memberId!==id);
+    db.repayments=db.repayments.filter(r=>r.memberId!==id);
+    db.taxRecords=db.taxRecords.filter(t=>t.memberId!==id);
+    saveDB;toast('Member deleted');route;
+  },
+  add-contribution{openModal(contribModal);},
+  del-contribution(el){if(!confirm('Delete this contribution?'))return;db.contributions=db.contributions.filter(c=>c.id!==el.dataset.id);saveDB;toast('Deleted');route;},
+  add-loan{openModal(loanModal);},
+  loan-approve(el){setLoanStatus(el,'APPROVED');},
+  loan-reject(el){setLoanStatus(el,'REJECTED');},
+  loan-disburse(el){setLoanStatus(el,'ACTIVE');},
+  loan-repay-open(el){const l=db.loans.find(x=>x.id===el.dataset.id);openModal(repayModal(l));},
+  del-loan(el){if(!confirm('Delete this loan?'))return;const id=el.dataset.id;db.loans=db.loans.filter(l=>l.id!==id);db.repayments=db.repayments.filter(r=>r.loanId!==id);saveDB;toast('Loan deleted');route;},
+  add-income{openModal(incomeModal);},
+  del-income(el){if(!confirm('Delete this income record?'))return;db.incomes=db.incomes.filter(i=>i.id!==el.dataset.id);saveDB;toast('Deleted');route;},
+  add-expense{openModal(expenseModal);},
+  del-expense(el){if(!confirm('Delete this expense record?'))return;db.expenses=db.expenses.filter(i=>i.id!==el.dataset.id);saveDB;toast('Deleted');route;},
+  add-taxrule{openModal(taxRuleModal);},
+  del-taxrule(el){if(!confirm('Delete this tax rule?'))return;db.taxRules=db.taxRules.filter(r=>r.id!==el.dataset.id);saveDB;toast('Rule deleted');route;},
+  tax-pay-open(el){const r=db.taxRecords.find(x=>x.id===el.dataset.id);openModal(taxPayModal(r));},
+  mark-all{
+    const u=currentUser;
+    db.notifications.forEach(n=>{if(n.coopId===u.coopId&&!n.read)n.read=true;});
+    saveDB;toast('All notifications marked as read','info');route;
+  },
+  read-one(el){
+    const n=db.notifications.find(x=>x.id===el.dataset.id);
+    if(n){n.read=true;saveDB;route;}
+  },
+  subscribe(el){
+    const plan=db.plans.find(p=>p.id===el.dataset.plan);
+    if(!plan)return;
+    const billing=el.dataset.billing;
+    const coop=currentCoop;
+    const amount=billing==='YEARLY'?plan.yearly:plan.monthly;
+    coop.planId=plan.id;coop.planName=plan.name;coop.memberLimit=plan.memberLimit;coop.status='ACTIVE';
+    db.payments.push({id:uid,coopId:coop.id,planName:plan.name,amount:amount,date:new Date.toISOString,method:'MOCK',ref:'MOCK-'+Math.floor(Math.random*9000+1000),status:'SUCCESS'});
+    notif(coop.id,null,'SUBSCRIPTION','Subscription updated',coop.name+' is now on '+plan.name+' ('+billing+'). Mock payment processed.');
+    saveDB;toast('Subscribed to '+plan.name+' — mock payment successful','success');route;
+  },
+  coop-status(el,e,val){
+    const c=db.coops.find(x=>x.id===el.dataset.id);
+    if(!c)return;
+    c.status=val;
+    db.audit.push({id:uid,coopId:c.id,userId:currentUser.id,action:'STATUS',entity:'COOPERATIVE',at:new Date.toISOString});
+    saveDB;toast('Cooperative status updated','success');route;
+  },
+  report-tab(el){ACTIVE_REPORT=el.dataset.type;route;},
+  export{
+    const from=(document.getElementById('r-from')||{}).value||'';
+    const to=(document.getElementById('r-to')||{}).value||'';
+    const rows=reportRows(ACTIVE_REPORT,from,to);
+    if(!rows.length){toast('Nothing to export','error');return;}
+    csvExport(rows,ACTIVE_REPORT+'-report');
+    toast('CSV exported','success');
+  },
+  print{window.print;},
+  close{closeModal;}
+};
+function setLoanStatus(el,status){
+  const loan=db.loans.find(x=>x.id===el.dataset.id);
+  if(!loan)return;
+  loan.status=status;
+  notif(loan.coopId,null,'LOAN','Loan '+status.replace(/_/g,' ').toLowerCase,'Loan of '+fmt(loan.amount)+' for '+memberName(loan.memberId)+' is now '+status.replace(/_/g,' ')+'.');
+  saveDB;toast('Loan '+status.toLowerCase,'success');route;
+}
+
+/* ---------- form handlers ---------- */
+const FORMS={
+  login(f){
+    const fd=Object.fromEntries(new FormData(f));
+    const u=db.users.find(x=>x.email.toLowerCase===fd.email.toLowerCase.trim);
+    if(!u||atob(u.pass)!==fd.password){toast('Invalid email or password','error');return;}
+    if(u.status!=='ACTIVE'){toast('This account is suspended','error');return;}
+    if(u.coopId){
+      const c=db.coops.find(x=>x.id===u.coopId);
+      if(c&&c.status==='SUSPENDED'){toast('Your cooperative has been suspended','error');return;}
+    }
+    localStorage.setItem(SESSION_KEY,u.id);
+    toast('Welcome back, '+u.name,'success');
+    goHome;
+  },
+  register(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.name||!fd.regNumber||!fd.adminName||!fd.adminEmail||fd.password.length<8){toast('Complete all required fields (password min 8 characters)','error');return;}
+    if(db.coops.some(c=>c.regNumber.toLowerCase===fd.regNumber.toLowerCase.trim)){toast('A cooperative with this registration number already exists','error');return;}
+    if(db.users.some(u=>u.email.toLowerCase===fd.adminEmail.toLowerCase.trim)){toast('Administrator email is already registered','error');return;}
+    const plan=db.plans.find(p=>p.id===fd.planId)||db.plans[0];
+    const coop={id:uid,name:fd.name,regNumber:fd.regNumber.trim,email:fd.email,phone:fd.phone,address:fd.address,state:fd.state,planId:plan.id,planName:plan.name,memberLimit:plan.memberLimit,status:'TRIAL',trialEnd:new Date(Date.now+14*DAY).toISOString,expiry:new Date(Date.now+14*DAY).toISOString};
+    db.coops.push(coop);
+    const admin={id:uid,name:fd.adminName,email:fd.adminEmail.toLowerCase.trim,pass:btoa(fd.password),role:'COOP_ADMIN',coopId:coop.id,memberId:null,status:'ACTIVE'};
+    db.users.push(admin);
+    notif(coop.id,admin.id,'SUBSCRIPTION','Welcome','Your '+plan.name+' trial is active for 14 days.');
+    saveDB;
+    localStorage.setItem(SESSION_KEY,admin.id);
+    toast('Cooperative created — 14-day trial started!','success');
+    location.hash='#/app';
+  },
+  member(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.fullName){toast('Full name is required','error');return;}
+    const coop=currentCoop;
+    if(fd.id){
+      const m=db.members.find(x=>x.id===fd.id);
+      if(!m)return;
+      Object.assign(m,{fullName:fd.fullName,email:fd.email,phone:fd.phone,address:fd.address,occupation:fd.occupation,joined:fd.joined?new Date(fd.joined+'T12:00:00').toISOString:m.joined});
+      saveDB;toast('Member updated','success');
+    }else{
+      if(coop.memberLimit!==-1&&db.members.filter(m=>m.coopId===coop.id).length>=coop.memberLimit){toast('Member limit reached for your plan','error');return;}
+      const no='COOP-'+new Date.getFullYear+'-'+String(db.members.filter(m=>m.coopId===coop.id).length+1).padStart(4,'0');
+      db.members.push({id:uid,coopId:coop.id,memberNo:no,fullName:fd.fullName,email:fd.email,phone:fd.phone,address:fd.address,occupation:fd.occupation,status:'ACTIVE',joined:fd.joined?new Date(fd.joined+'T12:00:00').toISOString:new Date.toISOString});
+      notif(coop.id,null,'MEMBER','New member added',fd.fullName+' ('+no+') was registered.');
+      saveDB;toast('Member added — '+no,'success');
+    }
+    closeModal;route;
+  },
+  contribution(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.memberId||!fd.amount||Number(fd.amount)<=0){toast('Member and positive amount required','error');return;}
+    const coop=currentCoop;
+    db.contributions.push({id:uid,coopId:coop.id,memberId:fd.memberId,type:fd.type,amount:Number(fd.amount),method:fd.method||'CASH',ref:fd.ref,date:fd.date?new Date(fd.date+'T12:00:00').toISOString:new Date.toISOString,desc:fd.desc,by:currentUser.id});
+    notif(coop.id,null,'CONTRIBUTION','Contribution recorded',fmt(fd.amount)+' '+fd.type.replace(/_/g,' ')+' for '+memberName(fd.memberId)+'.');
+    saveDB;toast('Contribution recorded','success');closeModal;route;
+  },
+  loan(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.memberId||!fd.amount||Number(fd.amount)<=0){toast('Member and positive amount required','error');return;}
+    const coop=currentCoop;
+    const start=fd.start?new Date(fd.start+'T12:00:00'):new Date;
+    const due=new Date(start);due.setMonth(due.getMonth+Number(fd.months||12));
+    db.loans.push({id:uid,coopId:coop.id,memberId:fd.memberId,amount:Number(fd.amount),rate:Number(fd.rate||0),months:Number(fd.months||12),start:start.toISOString,due:due.toISOString,freq:fd.freq||'MONTHLY',status:'PENDING',by:null});
+    notif(coop.id,null,'LOAN','Loan application','Loan of '+fmt(fd.amount)+' applied for '+memberName(fd.memberId)+'.');
+    saveDB;toast('Loan application submitted','success');closeModal;route;
+  },
+  repay(f){
+    const fd=Object.fromEntries(new FormData(f));
+    const l=db.loans.find(x=>x.id===fd.loanId);
+    if(!l)return;
+    const t=loanTotals(l);
+    const amt=Number(fd.amount);
+    if(!amt||amt<=0||amt>t.outstanding){toast('Enter a valid amount within the outstanding balance','error');return;}
+    db.repayments.push({id:uid,coopId:l.coopId,loanId:l.id,memberId:l.memberId,amount:amt,date:fd.date?new Date(fd.date+'T12:00:00').toISOString:new Date.toISOString,ref:'REP-'+Math.floor(Math.random*9000+1000)});
+    l.status=(t.paid+amt>=t.total)?'FULLY_PAID':'PARTIALLY_PAID';
+    notif(l.coopId,null,'REPAYMENT','Loan repayment',fmt(amt)+' repaid on loan for '+memberName(l.memberId)+'.');
+    saveDB;toast('Repayment recorded','success');closeModal;route;
+  },
+  income(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.source||!fd.amount||Number(fd.amount)<=0){toast('Source and positive amount required','error');return;}
+    const coop=currentCoop;
+    db.incomes.push({id:uid,coopId:coop.id,source:fd.source,category:fd.category,amount:Number(fd.amount),date:fd.date?new Date(fd.date+'T12:00:00').toISOString:new Date.toISOString,ref:fd.ref,desc:fd.desc});
+    saveDB;toast('Income recorded','success');closeModal;route;
+  },
+  expense(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.category||!fd.amount||Number(fd.amount)<=0){toast('Category and positive amount required','error');return;}
+    const coop=currentCoop;
+    db.expenses.push({id:uid,coopId:coop.id,category:fd.category,amount:Number(fd.amount),date:fd.date?new Date(fd.date+'T12:00:00').toISOString:new Date.toISOString,payee:fd.payee,ref:fd.ref,desc:fd.desc});
+    saveDB;toast('Expense recorded','success');closeModal;route;
+  },
+  taxrule(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.name||fd.rate===''){toast('Rule name and rate are required','error');return;}
+    const coop=currentCoop;
+    db.taxRules.push({id:uid,coopId:coop.id,name:fd.name,taxType:fd.taxType,rate:Number(fd.rate),threshold:fd.threshold?Number(fd.threshold):0,deduction:fd.deduction?Number(fd.deduction):0,active:fd.active==='true',eff:fd.eff?new Date(fd.eff+'T12:00:00').toISOString:new Date.toISOString});
+    saveDB;toast('Tax rule saved','success');closeModal;route;
+  },
+  taxcompute(f){
+    const fd=Object.fromEntries(new FormData(f));
+    if(!fd.ruleId){toast('Select a tax rule','error');return;}
+    const coop=currentCoop;
+    const rule=db.taxRules.find(r=>r.id===fd.ruleId);
+    if(!rule)return;
+    const gross=db.incomes.filter(i=>i.coopId===coop.id).reduce((s,i)=>s+Number(i.amount),0);
+    const taxable=Math.max(0,gross-Number(rule.deduction||0));
+    const liability=Math.round(taxable*Number(rule.rate)/100*100)/100;
+    const period=fd.period||String(new Date.getFullYear);
+    let rec=db.taxRecords.find(r=>r.coopId===coop.id&&r.ruleId===rule.id&&r.period===period);
+    if(rec){rec.taxableIncome=taxable;rec.rate=rule.rate;rec.liability=liability;rec.status='PENDING';}
+    else{db.taxRecords.push({id:uid,coopId:coop.id,ruleId:rule.id,period:period,taxableIncome:taxable,rate:rule.rate,liability:liability,paid:0,status:'PENDING',due:dPlus(14)});}
+    saveDB;toast('Computed tax liability: '+fmt(liability)+' ('+rule.name+'). Verify rates per applicable law.','info');route;
+  },
+  taxpay(f){
+    const fd=Object.fromEntries(new FormData(f));
+    const rec=db.taxRecords.find(r=>r.id===fd.recordId);
+    if(!rec)return;
+    const amt=Number(fd.amount);
+    if(!amt||amt<=0){toast('Enter a positive amount','error');return;}
+    rec.paid+=amt;
+    if(rec.paid>=rec.liability)rec.status='PAID';
+    saveDB;toast('Tax payment recorded','success');closeModal;route;
+  }
+};
+
+/* ---------- router ---------- */
+function route{
+  const h=location.hash||'#/';
+  const parts=h.replace('#/','').split('/');
+  const sec=parts[0];
+  const u=currentUser;
+  if(sec==='app'&&!u){location.hash='#/login';return;}
+  if(sec==='portal'&&(!u||u.role!=='MEMBER')){u?goHome:location.hash='#/login';return;}
+  if(sec==='superadmin'&&(!u||u.role!=='SUPER_ADMIN')){u?goHome:location.hash='#/login';return;}
+  let html;
+  if(sec===''){html=landing;}
+  else if(sec==='login'){html=loginView;}
+  else if(sec==='register'){html=registerView;}
+  else if(sec==='app'){html=appView(parts[1]||'dashboard');}
+  else if(sec==='portal'){html=appView('portal');}
+  else if(sec==='superadmin'){html=superView;}
+  else{html=landing;}
+  render(html);
+}
+
+/* ---------- global event delegation ---------- */
+document.addEventListener('click',function(e){
+  if(e.target.classList.contains('modal-backdrop')){closeModal;return;}
+  const el=e.target.closest('[data-action]');
+  if(!el)return;
+  const fn=ACTIONS[el.dataset.action];
+  if(fn){e.preventDefault;fn(el,e);}
+});
+document.addEventListener('submit',function(e){
+  const f=e.target.closest('form[data-form]');
+  if(!f)return;
+  e.preventDefault;
+  const fn=FORMS[f.dataset.form];
+  if(fn)fn(f,e);
+});
+document.addEventListener('change',function(e){
+  const sel=e.target.closest('select[data-action]');
+  if(!sel)return;
+  const fn=ACTIONS[sel.dataset.action];
+  if(fn)fn(sel,e,sel.value);
+});
+
+/* ---------- init ---------- */
+loadDB;
+window.addEventListener('hashchange',route);
+route;
+</script>
+</body>
+</html>
